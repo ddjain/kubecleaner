@@ -1,0 +1,29 @@
+# This rule is not used by the project custom-operator itself.
+# It is provided to allow the cluster admin to help manage permissions for users.
+#
+# Grants read-only access to cleanup.kubecleaner.io resources.
+# This role is intended for users who need visibility into these resources
+# without permissions to modify them. It is ideal for monitoring purposes and limited-access viewing.
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: custom-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: kubecleaner-viewer-role
+rules:
+- apiGroups:
+  - cleanup.kubecleaner.io
+  resources:
+  - kubecleaners
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - cleanup.kubecleaner.io
+  resources:
+  - kubecleaners/status
+  verbs:
+  - get

@@ -1,0 +1,24 @@
+apiVersion: cleanup.kubecleaner.io/v1alpha1
+kind: KubeCleaner
+metadata:
+  labels:
+    app.kubernetes.io/name: custom-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: kubecleaner-sample
+spec:
+  # How often the cleanup runs (Go duration: "30s", "5m", "1h")
+  interval: "5m"
+
+  # Set to true to only log what would be deleted without actually deleting
+  dryRun: true
+
+  # Resources with ANY of these labels (key=value match) are excluded from cleanup
+  excludeLabels:
+    app.kubernetes.io/managed-by: Helm
+    protected: "true"
+
+  # Optional: only target resources matching this selector.
+  # If omitted, ALL resources (except excluded ones) are targeted.
+  # selector:
+  #   matchLabels:
+  #     environment: staging
